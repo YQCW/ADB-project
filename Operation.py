@@ -4,10 +4,10 @@ from Transaction import Transaction
 def parseOp(line):
     regex = r'(.*)\((.*?)\)'
     lst = line.strip()
-    #print(lst)
     if lst.startswith('//') or lst == "":
         return None
     else:
+        print("command: "+lst)
         match = re.search(regex, lst)
         #print(match)
         op = match.group(1)
@@ -56,7 +56,7 @@ class Begin(Operation):
     def execute(self, time, tm, retry=False):
         t = Transaction(self.para[0], time, False)
         if t.id not in tm.transactions:
-        	tm.transactions[t.id] = t
+            tm.transactions[t.id] = t
         return True
 
 
@@ -166,6 +166,7 @@ class R(Operation):
                 site = tm.sites[itemId % 10]
                 if site.up == False:
                 #if the site is down, we just need to retry later
+                    print("Transaction " + str(transactionId) + "for Site " + str(site.siteId) + " for site down")
                     return False
                 elif transactionStartTime in site.snapshots.keys() and site.snapshots[transactionStartTime][itemId-1] != None:
                     print("x"+str(itemId)+":"+str(site.snapshots[transactionStartTime][itemId-1]))
@@ -181,18 +182,21 @@ class R(Operation):
                     elif transactionStartTime in site.snapshots.keys() and site.snapshots[transactionStartTime][itemId-1] != None:
                         print("x"+str(itemId)+":"+str(site.snapshots[transactionStartTime][itemId-1]))
                         return True
+                if canRead == True:
+                    print("Transaction " + str(transactionId) + " waits for no data available")
                 if canRead == False:
                     #if no site contains the item is up, just abort the transaction and no need to retry
-                    #tm.abortTransaction(transactionId)
-                    tm.transactions[transactionId].willAbort = True
+                    tm.abortTransaction(transactionId)
+                    #print("Transaction " + str(transactionId) + " aborts for no copies available")
+                    #tm.transactions[transactionId].willAbort = True
                     return True
-                    
         #if the transaction is not read-only
         else:
             if itemId % 2 != 0:
             #if the item is uniquely owned by one site
                 site = tm.sites[itemId % 10]
                 if not site.up:
+                    print("Transaction " + str(transactionId) + "for Site " + str(site.siteId) + " for site down")
                     return False
                 elif site.accessible[itemId-1] == True:
                     if site.lockTable.addLock(itemId,transactionId,0):
@@ -200,6 +204,7 @@ class R(Operation):
                         return result
                     else:
                         #cannot get lock, return false and try again later
+                        print("Transaction " + str(transactionId) + " waits for Site " + str(site.siteId) + " for lock conflict")
                         return False
             else:
             #if the item is owned by every site
@@ -211,6 +216,8 @@ class R(Operation):
                         if site.lockTable.addLock(itemId, transactionId, 0):
                             result = readNotFromCopy(transactionId, itemId, site)
                             return result
+                if tm.sites[0].lockTable.addLock(itemId, transactionId, 0)==False:
+                    print("Transaction " + str(transactionId) + " waits for conflict lock")
         return False
 
 
@@ -232,15 +239,18 @@ class W(Operation):
             site = tm.sites[itemId % 10]
             # the site is down, return false and retry later
             if not site.up:
+                print("Transaction "+str(transactionId)+"for Site "+str(site.siteId)+" for site down")
                 return False
             # the site is up and get the lock, write now
             elif site.lockTable.addLock(itemId,transactionId,1):
                 logs = site.log.get(transactionId, {})
                 logs[itemId] = newValue
                 site.log[transactionId] = logs
+                print("Transaction "+str(transactionId) + " write succeed. Affected sites:"+str(site.siteId))
                 return True
             # the site is up but cannot get the lock, retry later
             else:
+                print("Transaction "+str(transactionId)+" waits for Site "+str(site.siteId)+" for lock conflict")
                 return False
         #if the item is owned by every site
         else:
@@ -257,9 +267,11 @@ class W(Operation):
                 else:
                     for site in locks:
                         site.lockTable.releaseLock(itemId,transactionId)
+                    print("Transaction " + str(transactionId) + " waits for all up sites for lock conflict")
                     return False
             #if any up site cannot get lock, retry later
             if len(locks) == 0:
+                print("Transaction " + str(transactionId) + " waits for all up sites for lock conflict")
                 return False
 
             # if the transaction has all of the locks, write to the log
@@ -267,6 +279,10 @@ class W(Operation):
                 logs = site.log.get(transactionId, {})
                 logs[itemId] = newValue
                 site.log[transactionId] = logs
+            print("Transaction "+str(transactionId) + " write succeed. Affected sites:",end="")
+            for site in locks:
+                print(str(site.siteId),end=" ")
+            print("")
             return True
 
 class Dump(Operation):
