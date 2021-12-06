@@ -183,7 +183,8 @@ class R(Operation):
                         return True
                 if canRead == False:
                     #if no site contains the item is up, just abort the transaction and no need to retry
-                    tm.abortTransaction(transactionId)
+                    #tm.abortTransaction(transactionId)
+                    tm.transactions[transactionId].willAbort = True
                     return True
                     
         #if the transaction is not read-only
