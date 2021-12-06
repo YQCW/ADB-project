@@ -24,7 +24,7 @@ class site(object):
         self.log = {}
         self.lockTable.clearLockTable()
         for i in range(1,21):
-            if i % 2 != 0 and i % 10 + 1 == self.site_id:
+            if i % 2 != 0 and i % 10 + 1 == self.siteId:
                 self.accessible[i - 1] = True
             else:
                 self.accessible[i - 1] = False

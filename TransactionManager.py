@@ -1,10 +1,10 @@
-from DeadlockDetector import WaitforGraph
+from DeadlockDetector import WaitForGraph
 
 class TransactionManager(object):
     def __init__(self):
         self.sites = []
         self.transactions = {}
-        self.waitforGraph = WaitforGraph()
+        self.waitforGraph = WaitForGraph(self)
         self.blockedTransactions = []
         self.blockedOperations = []
 
@@ -30,17 +30,17 @@ class TransactionManager(object):
 
         #check the deadlock and abort if existing
         if operation.type in {"R", "W"} and self.waitforGraph.checkDeadlock():
-            involvedTransactions = self.wait_for_graph.getInvolvedTransactions()
+            involvedTransactions = self.waitforGraph.getInvolvedTransactions()
             t = self.getYoungest(involvedTransactions)
-            self.abort(t)
+            self.abortTransaction(t)
 
     def getYoungest(self,transactions):
-        minTime = transactions[0].beginTime
+        maxTime = self.transactions[transactions[0]].beginTime
         youngest = transactions[0]
         for transaction in transactions:
-            if transaction.beginTime < minTime:
+            if self.transactions[transaction].beginTime > maxTime:
                 youngest = transaction
-                minTIme = youngest.beginTime
+                maxTime = self.transactions[youngest].beginTime
         return youngest
 
     def abortTransaction(self,transactionId):

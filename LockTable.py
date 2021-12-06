@@ -6,11 +6,14 @@ class LockTable(object):
         """
         self.lockTable = {}
 
-    def addLock(self, itemId, lockType, transactionId):
+    def addLock(self, itemId, transactionId, lockType):
         #several conditions to consider:
         #no lock on certain item
+        print("call addLock:",itemId,transactionId,lockType)
         if itemId not in self.lockTable.keys():
+            print(self.lockTable.keys())
             self.lockTable[itemId] = [lockType,[transactionId]]
+            print(self.lockTable)
             return True
         else:
             # existing shared lock, want shared lock
@@ -69,3 +72,11 @@ class LockTable(object):
         for item in toBeDeleted:
             del self.lockTable[item]
 
+    def getInvolvedTransactions(self):
+        transactions = set()
+        for itemId, locks in self.lockTable.items():
+            # Transaction has read lock on var_id
+            print(itemId,locks)
+            for transactionId in locks[1]:
+                transactions.add(transactionId)
+        return transactions
