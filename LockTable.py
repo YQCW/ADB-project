@@ -9,11 +9,11 @@ class LockTable(object):
     def addLock(self, itemId, transactionId, lockType):
         #several conditions to consider:
         #no lock on certain item
-        print("call addLock:",itemId,transactionId,lockType)
+        #print("call addLock:",itemId,transactionId,lockType)
         if itemId not in self.lockTable.keys():
-            print(self.lockTable.keys())
+            #print(self.lockTable.keys())
             self.lockTable[itemId] = [lockType,[transactionId]]
-            print(self.lockTable)
+            #print(self.lockTable)
             return True
         else:
             # existing shared lock, want shared lock
@@ -30,7 +30,7 @@ class LockTable(object):
             #existing shared lock, want exclusive lock
             elif self.lockTable[itemId][0] == 0 and lockType == 1:
                 if transactionId in self.lockTable[itemId][1] and len(self.lockTable[itemId][1]) == 1:
-                    self.lockTalbe[itemId][0] = 1
+                    self.lockTable[itemId][0] = 1
                     self.lockTable[itemId][1] = [transactionId]
                     return True
                 else:
@@ -61,22 +61,23 @@ class LockTable(object):
 
     def releaseTransactionLock(self,transactionId):
         #search through the lock table and release the lock hold by certain transaction
+        #print("call release transaction lock: ",transactionId)
         toBeDeleted = []
         for itemId, value in self.lockTable.items():
             lockType, transactions = value
             if transactionId in transactions:
                 transactions.remove(transactionId)
-            if len(transactions) == 1:
+            if len(transactions) == 0:
                 toBeDeleted.append(itemId)
-
+        #print("tobedeleted:",toBeDeleted)
         for item in toBeDeleted:
             del self.lockTable[item]
+        #print(self.lockTable)
 
     def getInvolvedTransactions(self):
         transactions = set()
         for itemId, locks in self.lockTable.items():
             # Transaction has read lock on var_id
-            print(itemId,locks)
             for transactionId in locks[1]:
                 transactions.add(transactionId)
         return transactions

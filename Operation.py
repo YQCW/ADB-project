@@ -2,17 +2,18 @@ import re
 from Transaction import Transaction
 
 def parseOp(line):
-    print(line)
     regex = r'(.*)\((.*?)\)'
     lst = line.strip()
     #print(lst)
-    if lst.startswith('//'):
+    if lst.startswith('//') or lst == "":
         return None
     else:
         match = re.search(regex, lst)
         #print(match)
         op = match.group(1)
         para = match.group(2).split(',')
+        for i in range(len(para)):
+            para[i] = para[i].strip()
         return op, para
 
 def readNotFromCopy(transactionId, itemId, site):
@@ -23,7 +24,7 @@ def readNotFromCopy(transactionId, itemId, site):
     #if not, read from the site data list
         result = site.data[itemId-1]
 
-    print("x" + itemId + ":" + result)
+    print("x" + str(itemId) + ":" + str(result))
 
     return True
 
@@ -192,7 +193,7 @@ class R(Operation):
                 site = tm.sites[itemId % 10]
                 if not site.up:
                     return False
-                elif site.accesible[itemId-1] == True:
+                elif site.accessible[itemId-1] == True:
                     if site.lockTable.addLock(itemId,transactionId,0):
                         result = readNotFromCopy(transactionId, itemId, site)
                         return result
@@ -205,7 +206,7 @@ class R(Operation):
                     if site.up == False:
                         #current site is down, try next site
                         continue
-                    if site.accesible[itemId-1] == True:
+                    if site.accessible[itemId-1] == True:
                         if site.lockTable.addLock(itemId, transactionId, 0):
                             result = readNotFromCopy(transactionId, itemId, site)
                             return result
