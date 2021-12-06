@@ -86,7 +86,7 @@ class Fail(Operation):
         site_id = int(self.para[0])
         site = tm.sites[site_id-1]
         transactions = site.lockTable.getInvolvedTransactions()
-        print(transactions)
+        #print(transactions)
         for tid in transactions:
             tm.transactions[tid].willAbort = True
         site.fail()
