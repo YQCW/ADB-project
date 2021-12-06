@@ -48,7 +48,7 @@ class Operation(object):
 
 class Begin(Operation):
     def __init__(self, para):
-        super().__init__(para)
+        self.para = para
         self.type = 'begin'
 
     def execute(self, time, tm, retry=False):
@@ -60,7 +60,7 @@ class Begin(Operation):
 
 class BeginRO(Operation):
     def __init__(self, para):
-        super().__init__(para)
+        self.para = para
         self.type = 'beginRO'
 
     def execute(self, time, tm, retry=False):
@@ -75,13 +75,13 @@ class BeginRO(Operation):
 
 class Fail(Operation):
     def __init__(self, para):
-        super().__init__(para)
+        self.para = para
         self.type = 'fail'
 
     def execute(self, time, tm, retry=False):
         site_id = int(self.para[0])
         site = tm.sites[site_id-1]
-        transactions = site.lockTable.get_involved_transactions()
+        transactions = site.lockTable.getInvolvedTransactions()
 
         for tid in transactions:
             tm.transactions[tid].willAbort = True
@@ -91,7 +91,7 @@ class Fail(Operation):
 
 class Recover(Operation):
     def __init__(self, para):
-        super().__init__(para)
+        self.para = para
         self.type = 'recover'
 
     def execute(self, time, tm, retry=False):
@@ -102,7 +102,7 @@ class Recover(Operation):
 
 class End(Operation):
     def __init__(self, para):
-        super().__init__(para)
+        self.para = para
         self.type = 'end'
 
     def execute(self, time, tm, retry=False):
@@ -124,9 +124,9 @@ class End(Operation):
         for site in tm.sites:
             if site.up and tid in site.log:
                 l = site.log[tid]
-                for var_id, val in l.items():
-                    site.data[var_id-1] = val
-                    site.accessible[var_id - 1] = True
+                for item_id, item in l.items():
+                    site.data[item_id-1] = item
+                    site.accessible[item_id - 1] = True
              
                 site.log.pop(tid)
 
@@ -138,13 +138,13 @@ class End(Operation):
         if tid in tm.blockedTransactions:
             tm.transactions.remove(tid)
         
-        tm.wait_for_graph.removeTransaction(tid)
+        tm.waitforGraph.removeTransaction(tid)
 
         return True
 
 class R(Operation):
     def __init__(self, para):
-        super().__init__(para)
+        self.para = para
         self.type = 'R'
 
     def execute(self, time, tm, retry=False):
@@ -201,7 +201,7 @@ class R(Operation):
                         #current site is down, try next site
                         continue
                     if site.accesible[itemId-1] == True:
-                        if site.lock_manager.try_lock_variable(transactionId, itemId, 0):
+                        if site.lockTable.addLock(itemId, transactionId, 0):
                             result = readNotFromCopy(transactionId, itemId, site)
                             return result
         return False
@@ -209,7 +209,7 @@ class R(Operation):
 
 class W(Operation):
     def __init__(self, para):
-        super().__init__(para)
+        self.para = para
         self.type = 'W'
 
     def execute(self, time, tm, retry=False):
@@ -263,7 +263,7 @@ class W(Operation):
 
 class Dump(Operation):
     def __init__(self, para):
-        super().__init__(para)
+        self.para = para
         self.type = 'dump'
 
     def execute(self, time, tm, retry=False):
