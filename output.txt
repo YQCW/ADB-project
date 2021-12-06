@@ -23,8 +23,6 @@ site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100
 
 site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
-set()
-set()
 x1:10
 Transaction T1 commits
 x3:30
@@ -50,7 +48,6 @@ site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100
 site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
 x1:10
-{'T1'}
 x3:30
 x5:50
 Transaction T2 commits
@@ -75,7 +72,6 @@ site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100
 
 site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
-{'T1'}
 x3:30
 x5:50
 Transaction T2 commits
@@ -147,7 +143,6 @@ site 9 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:10
 site 10 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
 x3:30
-set()
 x3:30
 Transaction T2 commits
 Transaction T1 commits
@@ -198,7 +193,6 @@ site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 
 Transaction T3 commits
 Transaction T1 commits
 Transaction T2 commits
-{'T1'}
 T1 aborts
 Transaction T2 commits
 Transaction T3 commits
@@ -250,7 +244,6 @@ site 10 - x1:None x2:32 x3:None x4:23 x5:None x6:60 x7:None x8:80 x9:90 x10:100 
 
 Transaction T2 commits
 x3:44
-{'T3'}
 T3 aborts
 x2:20
 Transaction T1 commits
@@ -324,7 +317,6 @@ site 9 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100
 site 10 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
 x3:30
-{'T2'}
 x3:30
 T2 aborts
 Transaction T1 commits
@@ -396,7 +388,6 @@ site 9 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100
 site 10 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
 x3:30
-{'T2'}
 x3:30
 T2 aborts
 Transaction T1 commits
@@ -468,18 +459,8 @@ site 9 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:10
 
 site 10 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
-{'T1'}
 T1 aborts
 Transaction T3 commits
-set()
-set()
-set()
-set()
-set()
-set()
-set()
-set()
-set()
 site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
 
 site 2 - x1:10 x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
@@ -500,17 +481,8 @@ site 9 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:10
 
 site 10 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
-set()
-set()
 Transaction T1 commits
 x4:121
-{'T2'}
-set()
-set()
-set()
-set()
-set()
-set()
 Transaction T3 commits
 T2 aborts
 site 1 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
@@ -533,15 +505,6 @@ site 9 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:None x10:10
 
 site 10 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
-set()
-set()
-set()
-set()
-set()
-set()
-set()
-set()
-set()
 Transaction T1 commits
 site 1 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
 
@@ -563,16 +526,6 @@ site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100
 
 site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
-set()
-set()
-set()
-set()
-set()
-set()
-set()
-set()
-set()
-set()
 T2 aborts
 x2:20
 Transaction T1 commits
@@ -663,17 +616,8 @@ site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100
 
 site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
-set()
-set()
 Transaction T1 commits
 x4:121
-set()
-set()
-set()
-set()
-set()
-set()
-set()
 x4:232323
 Transaction T2 commits
 Transaction T3 commits
@@ -698,16 +642,6 @@ site 9 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:None x10:10
 site 10 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
 x3:30
-set()
-set()
-set()
-{'T1'}
-set()
-set()
-set()
-set()
-set()
-set()
 T1 aborts
 site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
 
@@ -760,7 +694,6 @@ site 9 - x1:None x2:10 x3:None x4:30 x5:None x6:60 x7:None x8:80 x9:None x10:100
 site 10 - x1:None x2:10 x3:None x4:30 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
 x3:30
-{'T3'}
 x4:40
 x5:50
 x6:60
@@ -791,16 +724,6 @@ site 9 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100
 site 10 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
 Transaction T1 commits
-set()
-set()
-set()
-set()
-set()
-set()
-set()
-set()
-set()
-set()
 x3:100
 x2:None
 site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
@@ -845,18 +768,8 @@ site 9 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:10
 
 site 10 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
 
-{'T1'}
 T1 aborts
 Transaction T3 commits
-set()
-set()
-set()
-set()
-set()
-set()
-set()
-set()
-set()
 Transaction T5 commits
 x2:90
 site 1 - x1:None x2:90 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
