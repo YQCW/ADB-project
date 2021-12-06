@@ -48,7 +48,6 @@ class site(object):
     def recover(self):
         self.up = True
 
-
     def snapshot(self, timeStamp):
         tmp = [None] * 20
         for i in range(1,21):
