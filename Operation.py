@@ -176,14 +176,14 @@ class R(Operation):
                 for site in tm.sites:
                     # we should verify this logic
                     # if the site is down, turn canRead to false, return false because we can retry later
-                    if site.up == False and transactionStartTime in site.snapshots and site.snapshots[transactionStartTime][itemId] != None:
+                    if site.up == False and transactionStartTime in site.snapshots.keys() and site.snapshots[transactionStartTime][itemId-1] != None:
                         canRead = True
-                    elif transactionStartTime in site.snapshots and site.snapshots[transactionStartTime][itemId] != None:
+                    elif transactionStartTime in site.snapshots.keys() and site.snapshots[transactionStartTime][itemId-1] != None:
                         print("x"+str(itemId)+":"+str(site.snapshots[transactionStartTime][itemId-1]))
                         return True
                 if canRead == False:
                     #if no site contains the item is up, just abort the transaction and no need to retry
-                    tm.abort(transactionId)
+                    tm.abortTransaction(transactionId)
                     return True
                     
         #if the transaction is not read-only
