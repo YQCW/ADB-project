@@ -1,0 +1,10 @@
+// This is an illegal input from professor's description. But we made it to work fine.
+// end(T1) will execute after end(T2) has executed. T1 will read x2 = 302.
+begin(T1)
+begin(T2)
+R(T2, x2)
+W(T2, x2, 302)
+R(T1, x2)
+end(T1)
+end(T2)
+dump()

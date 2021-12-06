@@ -59,7 +59,7 @@ class LockTable(object):
     def releaseTransactionLock(self,transactionId):
         #search through the lock table and release the lock hold by certain transaction
         toBeDeleted = []
-        for itemId, value in self.lockTable:
+        for itemId, value in self.lockTable.items():
             lockType, transactions = value
             if transactionId in transactions:
                 transactions.remove(transactionId)

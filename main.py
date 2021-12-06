@@ -16,10 +16,12 @@ if __name__ == '__main__':
         tm.sites.append(site(i))
 
     with open(inputFile) as input:
-        time = 0
-        for line in inputFile:
-            time += 1
-            type, parameters = parseOp(line)
+        time = 1
+        for line in input:
+            tmp = parseOp(line)
+            if tmp == None:
+                continue
+            type, parameters = tmp
             operation = None
             if type == "begin":
                 operation = Begin(parameters)
@@ -41,3 +43,4 @@ if __name__ == '__main__':
                 print("error operation type!!!!!")
                 exit(1)
             tm.step(operation, time)
+            time += 1

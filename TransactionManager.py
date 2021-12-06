@@ -29,7 +29,7 @@ class TransactionManager(object):
             self.blockedOperations.append(operation)
 
         #check the deadlock and abort if existing
-        if operation.type in {"R", "W"} and self.wait_for_graph.checkDeadlock():
+        if operation.type in {"R", "W"} and self.waitforGraph.checkDeadlock():
             involvedTransactions = self.wait_for_graph.getInvolvedTransactions()
             t = self.getYoungest(involvedTransactions)
             self.abort(t)

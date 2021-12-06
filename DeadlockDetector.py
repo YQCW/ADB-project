@@ -3,8 +3,10 @@ class WaitforGraph(object):
     def __init__(self):
         pass
     def checkDeadlock(self):
-        pass
+        return False
     def getInvolvedTransactions(self):
-        pass
+        return []
     def removeTransaction(self,transaction):
-        pass
+        return True
+    def addOperation(self,operation):
+        return True

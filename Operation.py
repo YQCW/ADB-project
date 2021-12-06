@@ -1,16 +1,17 @@
 import re
-from TransactionManager import TransactionManager
 from Transaction import Transaction
 
 def parseOp(line):
-	regex = r'(.*)\((.*?)\)'
-	lst = line.split()
-	if lst[0] == '//':
-		return None
-	else:
-		match = re.findall(regex, lst[0])
-		op = match.group(1)
-		para = match.group(2).split(',')
+    #print(line)
+    regex = r'(.*)\((.*?)\)'
+    lst = line.split()
+    #print(lst)
+    if lst[0] == '//':
+        return None
+    else:
+        match = re.search(regex, lst[0])
+        op = match.group(1)
+        para = match.group(2).split(',')
         for p in para:
             p.strip()
         return op, para
@@ -23,7 +24,7 @@ def readNotFromCopy(transactionId, itemId, site):
     #if not, read from the site data list
         result = site.data[itemId-1]
 
-    print("x" + itemId + ":" + site.siteId)
+    print("x" + itemId + ":" + result)
 
     return True
 
@@ -32,7 +33,7 @@ def getNumber(itemId):
 
 class Operation(object):
     def __init__(self, para):
-        self.type = None 
+        self.type = None
         self.para = para  
         self.transaction = None 
 
@@ -50,9 +51,10 @@ class Begin(Operation):
     def __init__(self, para):
         self.para = para
         self.type = 'begin'
+        self.transaction = para[0]
 
     def execute(self, time, tm, retry=False):
-        t = Transaction(self.para[0], time)
+        t = Transaction(self.para[0], time, False)
         if t.id not in tm.transactions:
         	tm.transactions[t.id] = t
         return True
@@ -62,6 +64,7 @@ class BeginRO(Operation):
     def __init__(self, para):
         self.para = para
         self.type = 'beginRO'
+        self.transaction = para[0]
 
     def execute(self, time, tm, retry=False):
         t = Transaction(self.para[0], time, True)
@@ -76,6 +79,7 @@ class BeginRO(Operation):
 class Fail(Operation):
     def __init__(self, para):
         self.para = para
+        self.transaction = para[0]
         self.type = 'fail'
 
     def execute(self, time, tm, retry=False):
@@ -92,6 +96,7 @@ class Fail(Operation):
 class Recover(Operation):
     def __init__(self, para):
         self.para = para
+        self.transaction = para[0]
         self.type = 'recover'
 
     def execute(self, time, tm, retry=False):
@@ -104,6 +109,7 @@ class End(Operation):
     def __init__(self, para):
         self.para = para
         self.type = 'end'
+        self.transaction = para[0]
 
     def execute(self, time, tm, retry=False):
         if not retry:
@@ -114,7 +120,7 @@ class End(Operation):
             return True
 
         tid = self.para[0]
-        start_time = tm.transactions[tid].time
+        start_time = tm.transactions[tid].beginTime
 
         if tid in tm.blockedTransactions:
             return False
@@ -127,13 +133,12 @@ class End(Operation):
                 for item_id, item in l.items():
                     site.data[item_id-1] = item
                     site.accessible[item_id - 1] = True
-             
                 site.log.pop(tid)
 
             elif site.up and start_time in site.snapshots:
                 site.snapshots.pop(start_time)
 
-            site.lockTable.releaseTransactionLocks(tid)
+            site.lockTable.releaseTransactionLock(tid)
 
         if tid in tm.blockedTransactions:
             tm.transactions.remove(tid)
@@ -146,6 +151,7 @@ class R(Operation):
     def __init__(self, para):
         self.para = para
         self.type = 'R'
+        self.transaction = para[0]
 
     def execute(self, time, tm, retry=False):
         if retry == False:
@@ -162,7 +168,7 @@ class R(Operation):
                 #if the site is down, we just need to retry later
                     return False
                 elif transactionStartTime in site.snapshots.keys() and site.snapshots[transactionStartTime][itemId-1] != None:
-                    print("x"+itemId+":"+site.siteId)
+                    print("x"+str(itemId)+":"+str(site.snapshots[transactionStartTime][itemId-1]))
                     return True
             else:
             #if the item is owned by every site
@@ -173,7 +179,7 @@ class R(Operation):
                     if site.up == False and transactionStartTime in site.snapshots and site.snapshots[transactionStartTime][itemId] != None:
                         canRead = True
                     elif transactionStartTime in site.snapshots and site.snapshots[transactionStartTime][itemId] != None:
-                        print("x" + itemId + ":" + site.siteId)
+                        print("x"+str(itemId)+":"+str(site.snapshots[transactionStartTime][itemId-1]))
                         return True
                 if canRead == False:
                     #if no site contains the item is up, just abort the transaction and no need to retry
@@ -210,6 +216,7 @@ class R(Operation):
 class W(Operation):
     def __init__(self, para):
         self.para = para
+        self.transaction = para[0]
         self.type = 'W'
 
     def execute(self, time, tm, retry=False):
@@ -226,7 +233,7 @@ class W(Operation):
             if not site.up:
                 return False
             # the site is up and get the lock, write now
-            elif site.lockTable.addLockaddLock(itemId,transactionId,1):
+            elif site.lockTable.addLock(itemId,transactionId,1):
                 logs = site.log.get(transactionId, {})
                 logs[itemId] = newValue
                 site.log[transactionId] = logs
@@ -243,7 +250,7 @@ class W(Operation):
                 if site.up == False:
                     continue
                 # try to lock the item on the site and succeed
-                elif site.lockTable.addLockaddLock(itemId,transactionId,1):
+                elif site.lockTable.addLock(itemId,transactionId,1):
                     locks.append(site)
                 # cannot get lock, release all the lock obtained before and retry later
                 else:
@@ -257,7 +264,7 @@ class W(Operation):
             # if the transaction has all of the locks, write to the log
             for site in locks:
                 logs = site.log.get(transactionId, {})
-                logs[transactionId] = newValue
+                logs[itemId] = newValue
                 site.log[transactionId] = logs
             return True
 
@@ -265,15 +272,16 @@ class Dump(Operation):
     def __init__(self, para):
         self.para = para
         self.type = 'dump'
+        self.transaction = para[0]
 
     def execute(self, time, tm, retry=False):
         for site in tm.sites:
-            print("site "+site.siteId+" - ",end="")
+            print("site "+str(site.siteId)+" - ",end="")
             data = site.data
             for i in range(20):
                 if data[i] == None:
-                    print("x" + str(i + 1) + ": None", end="")
+                    print("x" + str(i + 1) + ":None", end=" ")
                 else:
-                    print("x"+str(i+1)+": "+ data[i], end="")
+                    print("x"+str(i+1)+":"+ str(data[i]), end=" ")
             print("\n")
         return True
