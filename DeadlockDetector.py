@@ -37,23 +37,23 @@ class WaitForGraph(object):
                 if type == "W":
                     for op in ops:
                         if op.type == "W" and op.para[0] == transactionId:
-                            addOp(ops, operation, itemId)
+                            self.addOp(ops, operation, itemId)
                             return
 
                     for op in ops:
                         if op.para[0] != transactionId:
-                            addWait(op, transactionId)
+                            self.addWait(op, transactionId)
                 else:
                     for op in ops:
                         if op.para[0] == transactionId:
-                            addOp(ops, operation, itemId)
+                            self.addOp(ops, operation, itemId)
                             return
 
                     for op in ops:
                         if op.type == "W" and op.para[0] != transactionId:
-                            addWait(op, transactionId)
+                            self.addWait(op, transactionId)
 
-                addOp(ops, operation, itemId)
+                self.addOp(ops, operation, itemId)
 
     def DFS(self, cur_node, target, visited):
         visited[cur_node] = True
@@ -85,12 +85,13 @@ class WaitForGraph(object):
 
     def removeTransaction(self, transaction_id):
         for item, ops in self.itemToOps.items():
-            tmp = {}
+            tmp = set()
             for op in ops:
                 if op.para[0] != transaction_id:
                     tmp.add(op)
             self.itemToOps[item] = tmp
-        del self.wait_for[transaction_id]
+        if transaction_id in self.wait_for.keys():
+            del self.wait_for[transaction_id]
 
     def getInvolvedTransactions(self):
         return self.trace

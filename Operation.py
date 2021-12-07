@@ -87,6 +87,8 @@ class Fail(Operation):
         site = tm.sites[site_id-1]
         transactions = site.lockTable.getInvolvedTransactions()
         #print(transactions)
+        # if a site fail and any item is accessed by a transaction before and the transaction hasn't commit or abort,
+        # the transaction will abort at End command
         for tid in transactions:
             tm.transactions[tid].willAbort = True
         site.fail()
@@ -265,8 +267,8 @@ class W(Operation):
                     locks.append(site)
                 # cannot get lock, release all the lock obtained before and retry later
                 else:
-                    for site in locks:
-                        site.lockTable.releaseLock(itemId,transactionId)
+                    for lockSite in locks:
+                        lockSite.lockTable.releaseLock(itemId,transactionId)
                     print("Transaction " + str(transactionId) + " waits for all up sites for lock conflict")
                     return False
             #if any up site cannot get lock, retry later

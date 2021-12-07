@@ -1,0 +1,7 @@
+How to run this program with single test file:
+python3 main.py <fileName>
+
+How to run this program with a folder called test_files containing test file:
+python3 tests.py
+
+The output goes directly into standard output.

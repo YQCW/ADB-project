@@ -1,0 +1,1559 @@
+command: begin(T1)
+command: beginRO(T2)
+command: R(T2,x1)
+x1:10
+command: R(T2,x2)
+x2:20
+command: W(T1,x3,33)
+Transaction T1 write succeed. Affected sites:4
+command: end(T1)
+Transaction T1 commits
+command: R(T2,x3)
+x3:30
+command: end(T2)
+Transaction T2 commits
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:33 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: fail(3)
+command: fail(4)
+command: R(T1,x1)
+x1:10
+command: W(T2,x8,88)
+Transaction T2 write succeed. Affected sites:1 2 5 6 7 8 9 10 
+command: end(T1)
+Transaction T1 commits
+command: recover(4)
+command: recover(3)
+command: R(T2,x3)
+x3:30
+command: end(T2)
+Transaction T2 commits
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:50 x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:70 x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: R(T1,x1)
+x1:10
+command: fail(2)
+command: W(T2,x8,88)
+Transaction T2 write succeed. Affected sites:1 3 4 5 6 7 8 9 10 
+command: R(T2,x3)
+x3:30
+command: R(T1, x5)
+x5:50
+command: end(T2)
+Transaction T2 commits
+command: recover(2)
+command: end(T1)
+T1 aborts
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:30 x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:50 x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:70 x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: W(T1,x6,66)
+Transaction T1 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: fail(2)
+command: W(T2,x8,88)
+Transaction T2 write succeed. Affected sites:1 3 4 5 6 7 8 9 10 
+command: R(T2,x3)
+x3:30
+command: R(T1, x5)
+x5:50
+command: end(T2)
+Transaction T2 commits
+command: recover(2)
+command: end(T1)
+T1 aborts
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:30 x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:50 x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:70 x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: W(T1,x1,101)
+Transaction T1 write succeed. Affected sites:2
+command: W(T2,x2,202)
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: W(T1,x2,102)
+Transaction T1 waits for all up sites for lock conflict
+command: W(T2,x1,201)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 waits for Site 2 for lock conflict
+T2 aborts
+command: end(T1)
+Transaction T1 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:101 x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:102 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:102 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: beginRO(T2)
+command: W(T1,x1,101)
+Transaction T1 write succeed. Affected sites:2
+command: R(T2,x2)
+x2:20
+command: W(T1,x2,102)
+Transaction T1 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: R(T2,x1)
+x1:10
+command: end(T1)
+Transaction T1 commits
+command: end(T2)
+Transaction T2 commits
+command: dump()
+site 1 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:101 x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:102 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:102 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:102 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: R(T1,x3)
+x3:30
+command: fail(2)
+command: W(T2,x8,88)
+Transaction T2 write succeed. Affected sites:1 3 4 5 6 7 8 9 10 
+command: R(T2,x3)
+x3:30
+command: W(T1, x5,91)
+Transaction T1 write succeed. Affected sites:6
+command: end(T2)
+Transaction T2 commits
+command: recover(2)
+command: end(T1)
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:30 x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:91 x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:70 x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:88 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: R(T1, x1)
+x1:10
+command: R(T2, x1)
+x1:10
+command: W(T1, x1, 33)
+Transaction T1 waits for Site 2 for lock conflict
+command: end(T2)
+Transaction T1 waits for Site 2 for lock conflict
+Transaction T2 commits
+command: end(T1)
+Transaction T1 write succeed. Affected sites:2
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:33 x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: begin(T3)
+command: W(T3,x2,10)
+Transaction T3 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: W(T1,x2,10)
+Transaction T1 waits for all up sites for lock conflict
+command: W(T2,x2,10)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 waits for all up sites for lock conflict
+command: end(T3)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 waits for all up sites for lock conflict
+Transaction T3 commits
+command: end(T1)
+Transaction T1 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T2 waits for all up sites for lock conflict
+Transaction T1 commits
+command: end(T2)
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T2 commits
+command: begin(T5)
+command: begin(T4)
+command: begin(T3)
+command: begin(T2)
+command: begin(T1)
+command: W(T1,x4, 5)
+Transaction T1 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: fail(2)
+command: W(T2,x4,44)
+Transaction T2 waits for all up sites for lock conflict
+command: recover(2)
+Transaction T2 waits for all up sites for lock conflict
+command: W(T3,x4,55)
+Transaction T2 waits for all up sites for lock conflict
+Transaction T3 waits for all up sites for lock conflict
+command: W(T4,x4,66)
+Transaction T2 waits for all up sites for lock conflict
+Transaction T3 waits for all up sites for lock conflict
+Transaction T4 waits for all up sites for lock conflict
+command: W(T5,x4,77)
+Transaction T2 waits for all up sites for lock conflict
+Transaction T3 waits for all up sites for lock conflict
+Transaction T4 waits for all up sites for lock conflict
+Transaction T5 waits for all up sites for lock conflict
+command: end(T1)
+Transaction T2 waits for all up sites for lock conflict
+Transaction T3 waits for all up sites for lock conflict
+Transaction T4 waits for all up sites for lock conflict
+Transaction T5 waits for all up sites for lock conflict
+T1 aborts
+command: end(T2)
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T3 waits for all up sites for lock conflict
+Transaction T4 waits for all up sites for lock conflict
+Transaction T5 waits for all up sites for lock conflict
+Transaction T2 commits
+command: end(T3)
+Transaction T3 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T4 waits for all up sites for lock conflict
+Transaction T5 waits for all up sites for lock conflict
+Transaction T3 commits
+command: end(T4)
+Transaction T4 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T5 waits for all up sites for lock conflict
+Transaction T4 commits
+command: end(T5)
+Transaction T5 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T5 commits
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:77 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:77 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:77 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:30 x4:77 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:77 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:77 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:77 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:77 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:77 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:77 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: begin(T3)
+command: W(T1,x1,5)
+Transaction T1 write succeed. Affected sites:2
+command: W(T3,x2,32)
+Transaction T3 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: W(T2,x1,17) // will cause T2 to wait, but the write will go ahead after T1 commits
+Transaction T2 waits for Site 2 for lock conflict
+command: end(T1)
+Transaction T2 waits for Site 2 for lock conflict
+Transaction T1 commits
+command: begin(T4)
+Transaction T2 write succeed. Affected sites:2
+command: W(T4,x4,35)
+Transaction T4 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: W(T3,x5,21)
+Transaction T3 write succeed. Affected sites:6
+command: W(T4,x2,21)
+Transaction T4 waits for all up sites for lock conflict
+command: W(T3,x4,23)// T4 will abort because it’s younger
+Transaction T4 waits for all up sites for lock conflict
+Transaction T3 waits for all up sites for lock conflict
+T4 aborts
+command: end(T2)
+Transaction T3 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T2 commits
+command: end(T3)
+Transaction T3 commits
+command: dump()
+site 1 - x1:None x2:32 x3:None x4:23 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:17 x2:32 x3:None x4:23 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:32 x3:None x4:23 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:32 x3:30 x4:23 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:32 x3:None x4:23 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:32 x3:None x4:23 x5:21 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:32 x3:None x4:23 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:32 x3:None x4:23 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:32 x3:None x4:23 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:32 x3:None x4:23 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T3)
+command: begin(T1)
+command: begin(T2)
+command: W(T3,x2,22)
+Transaction T3 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: W(T2,x3,44)
+Transaction T2 write succeed. Affected sites:4
+command: R(T3,x3)
+Transaction T3 waits for Site 4 for lock conflict
+command: end(T2)
+Transaction T3 waits for Site 4 for lock conflict
+Transaction T2 commits
+command: fail(4)
+x3:44
+command: end(T3)
+T3 aborts
+command: R(T1,x2)
+x2:20
+command: end(T1)
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:44 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T3)
+command: begin(T1)
+command: begin(T2)
+command: W(T3,x2,22)
+Transaction T3 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: W(T2,x4,44)
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: R(T3,x4)
+Transaction T3 waits for conflict lock
+command: end(T2)
+Transaction T3 waits for conflict lock
+Transaction T2 commits
+command: end(T3)
+x4:44
+Transaction T3 commits
+command: R(T1,x2)
+x2:22
+command: end(T1)
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:22 x3:30 x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:22 x3:None x4:44 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: R(T1,x2)
+x2:20
+command: R(T2,x2)
+x2:20
+command: end(T1)
+Transaction T1 commits
+command: W(T2,x2,10)
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: end(T2)
+Transaction T2 commits
+command: dump()
+site 1 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:10 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:10 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: R(T1,x3)
+x3:30
+command: W(T2,x8,88)
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: fail(2)
+command: R(T2,x3)
+x3:30
+command: recover(2)
+command: W(T1, x4,91)
+Transaction T1 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: end(T2)
+T2 aborts
+command: end(T1)
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:91 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:91 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:91 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:30 x4:91 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:91 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:91 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:91 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:91 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:91 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:91 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: begin(T3)
+command: W(T3,x2,10)
+Transaction T3 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: W(T2,x2,10)
+Transaction T2 waits for all up sites for lock conflict
+command: W(T1,x2,10)
+Transaction T2 waits for all up sites for lock conflict
+Transaction T1 waits for all up sites for lock conflict
+command: end(T3)
+Transaction T2 waits for all up sites for lock conflict
+Transaction T1 waits for all up sites for lock conflict
+Transaction T3 commits
+command: end(T2)
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 commits
+command: end(T1)
+Transaction T1 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:10 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:10 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: R(T1,x2)
+x2:20
+command: R(T2,x2)
+x2:20
+command: W(T2,x2,10)
+Transaction T2 waits for all up sites for lock conflict
+command: end(T1)
+Transaction T2 waits for all up sites for lock conflict
+Transaction T1 commits
+command: end(T2)
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T2 commits
+command: dump()
+site 1 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:10 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:10 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: R(T1,x3)
+x3:30
+command: W(T2,x8,88)
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: fail(2)
+command: R(T2,x3)
+x3:30
+command: W(T1, x4,91)
+Transaction T1 write succeed. Affected sites:1 3 4 5 6 7 8 9 10 
+command: recover(2)
+command: end(T2)
+T2 aborts
+command: end(T1)
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:91 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:91 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:30 x4:91 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:91 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:91 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:91 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:91 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:91 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:91 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: begin(T3)
+command: W(T3,x2,22)
+Transaction T3 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: W(T2,x4,44)
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: R(T3,x4)
+Transaction T3 waits for conflict lock
+command: end(T2)
+Transaction T3 waits for conflict lock
+Transaction T2 commits
+command: end(T3)
+x4:44
+Transaction T3 commits
+command: R(T1,x2)
+x2:22
+command: end(T1)
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:22 x3:30 x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:22 x3:None x4:44 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: R(T2, x2)
+x2:20
+command: W(T1, x2, 202)
+Transaction T1 waits for all up sites for lock conflict
+command: W(T2, x2, 302)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+T2 aborts
+command: end(T1)
+Transaction T1 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:202 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:202 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: W(T1,x2,9)
+Transaction T1 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: fail(1)
+command: end(T1)
+T1 aborts
+command: begin(T3)
+command: W(T3,x2,100)
+Transaction T3 write succeed. Affected sites:2 3 4 5 6 7 8 9 10 
+command: end(T3)
+Transaction T3 commits
+command: recover(1)
+command: fail(2)
+command: fail(3)
+command: fail(4)
+command: fail(5)
+command: fail(6)
+command: fail(7)
+command: fail(8)
+command: fail(9)
+command: fail(10)
+command: R(T2,x2)
+command: begin(T5)
+command: W(T5,x2,90)
+Transaction T5 waits for all up sites for lock conflict
+command: dump()
+Transaction T5 waits for all up sites for lock conflict
+site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:100 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:100 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: fail(5)
+command: fail(6)
+command: begin(T1)
+command: W(T1, x4, 121)
+Transaction T1 write succeed. Affected sites:1 2 3 4 7 8 9 10 
+command: end(T1)
+Transaction T1 commits
+command: begin(T2)
+command: R(T2, x4)
+x4:121
+command: recover(5)
+command: fail(1)
+command: fail(3)
+command: fail(4)
+command: fail(7)
+command: fail(8)
+command: fail(9)
+command: fail(10)
+command: begin(T3)
+command: W(T3,x4,15151)
+Transaction T3 write succeed. Affected sites:2 5 
+command: end(T3)
+Transaction T3 commits
+command: W(T2,x4,232323)
+Transaction T2 write succeed. Affected sites:2 5 
+command: end(T2)
+T2 aborts
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:15151 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:30 x4:121 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:15151 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: fail(2)
+command: fail(3)
+command: fail(4)
+command: fail(5)
+command: fail(6)
+command: fail(7)
+command: fail(8)
+command: fail(9)
+command: fail(10)
+command: W(T1, x2, 100)
+Transaction T1 write succeed. Affected sites:1 
+command: end(T1)
+Transaction T1 commits
+command: recover(2)
+command: beginRO(T2)
+command: R(T2, x2)
+x2:100
+command: end(T2)
+Transaction T2 commits
+command: dump()
+site 1 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: fail(1)
+command: fail(2)
+command: fail(3)
+command: fail(4)
+command: fail(5)
+command: fail(6)
+command: fail(7)
+command: fail(8)
+command: fail(9)
+command: fail(10)
+command: beginRO(T3)
+command: R(T3, x3)
+Transaction T3for Site 4 for site down
+command: R(T3, x3)
+Transaction T3for Site 4 for site down
+Transaction T3for Site 4 for site down
+command: R(T3, x3)
+Transaction T3for Site 4 for site down
+Transaction T3for Site 4 for site down
+Transaction T3for Site 4 for site down
+command: R(T3, x4)
+Transaction T3for Site 4 for site down
+Transaction T3for Site 4 for site down
+Transaction T3for Site 4 for site down
+T3 aborts
+command: recover(4)
+command: begin(T1)
+command: begin(T2)
+command: W(T1, x1, 11)
+Transaction T1 write succeed. Affected sites:2
+command: W(T2, x2, 22)
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: R(T1, x2)
+Transaction T1 waits for conflict lock
+command: R(T2, x1)
+Transaction T1 waits for conflict lock
+Transaction T2 waits for Site 2 for lock conflict
+T2 aborts
+command: end(T1)
+x2:20
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:11 x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: R(T2, x2)
+x2:20
+command: W(T2, x2, 302)
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: R(T1, x2)
+Transaction T1 waits for conflict lock
+command: end(T1)
+Transaction T1 waits for conflict lock
+command: end(T2)
+Transaction T1 waits for conflict lock
+Transaction T2 commits
+command: dump()
+x2:302
+site 1 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:302 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:302 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: W(T2, x2, 188)
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: W(T1, x2, 202)
+Transaction T1 waits for all up sites for lock conflict
+command: W(T2, x2, 302)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: end(T2)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 commits
+command: end(T1)
+Transaction T1 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:202 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:202 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:202 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: W(T1, x1, 11)
+Transaction T1 write succeed. Affected sites:2
+command: W(T2, x1, 22)
+Transaction T2 waits for Site 2 for lock conflict
+command: W(T1, x1, 33)
+Transaction T2 waits for Site 2 for lock conflict
+Transaction T1 write succeed. Affected sites:2
+command: end(T1)
+Transaction T2 waits for Site 2 for lock conflict
+Transaction T1 commits
+command: end(T2)
+Transaction T2 write succeed. Affected sites:2
+Transaction T2 commits
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:22 x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: fail(5)
+command: fail(6)
+command: begin(T1)
+command: W(T1, x4, 121)
+Transaction T1 write succeed. Affected sites:1 2 3 4 7 8 9 10 
+command: end(T1)
+Transaction T1 commits
+command: begin(T2)
+command: R(T2, x4)
+x4:121
+command: recover(5)
+command: fail(2)
+command: fail(3)
+command: fail(4)
+command: fail(7)
+command: fail(8)
+command: fail(9)
+command: fail(10)
+command: begin(T3)
+command: W(T2,x4,232323)
+Transaction T2 write succeed. Affected sites:1 5 
+command: W(T3,x4,15151)
+Transaction T3 waits for all up sites for lock conflict
+command: R(T2, x4)
+Transaction T3 waits for all up sites for lock conflict
+x4:232323
+command: end(T2)
+Transaction T3 waits for all up sites for lock conflict
+Transaction T2 commits
+command: end(T3)
+Transaction T3 write succeed. Affected sites:1 5 
+Transaction T3 commits
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:15151 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:30 x4:121 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:15151 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:121 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: W(T1, x3, 100)
+Transaction T1 write succeed. Affected sites:4
+command: beginRO(T2)
+command: R(T2, x3)
+x3:30
+command: fail(1)
+command: fail(2)
+command: fail(3)
+command: fail(4)
+command: fail(5)
+command: fail(6)
+command: fail(7)
+command: fail(8)
+command: fail(9)
+command: fail(10)
+command: R(T2, x2)
+Transaction T2 waits for no data available
+command: end(T1)
+Transaction T2 waits for no data available
+T1 aborts
+command: recover(1)
+Transaction T2 waits for no data available
+command: end(T2)
+x2:20
+Transaction T2 commits
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: begin(T3)
+command: begin(T4)
+command: begin(T5)
+command: R(T3,x3)
+x3:30
+command: R(T4,x4)
+x4:40
+command: R(T5,x5)
+x5:50
+command: R(T1,x1)
+x1:10
+command: R(T2,x2)
+x2:20
+command: W(T1,x2,10)
+Transaction T1 waits for all up sites for lock conflict
+command: W(T2,x3,20)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 waits for Site 4 for lock conflict
+command: W(T3,x4,30)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 waits for Site 4 for lock conflict
+Transaction T3 waits for all up sites for lock conflict
+command: W(T4,x5,40)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 waits for Site 4 for lock conflict
+Transaction T3 waits for all up sites for lock conflict
+Transaction T4 waits for Site 6 for lock conflict
+command: W(T5,x1,50)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 waits for Site 4 for lock conflict
+Transaction T3 waits for all up sites for lock conflict
+Transaction T4 waits for Site 6 for lock conflict
+Transaction T5 waits for Site 2 for lock conflict
+T5 aborts
+command: end(T4)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 waits for Site 4 for lock conflict
+Transaction T3 waits for all up sites for lock conflict
+Transaction T4 write succeed. Affected sites:6
+Transaction T4 commits
+command: end(T3)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 waits for Site 4 for lock conflict
+Transaction T3 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T3 commits
+command: end(T2)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 write succeed. Affected sites:4
+Transaction T2 commits
+command: end(T1)
+Transaction T1 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:10 x3:None x4:30 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:10 x3:None x4:30 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:10 x3:None x4:30 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:10 x3:20 x4:30 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:10 x3:None x4:30 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:10 x3:None x4:30 x5:40 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:10 x3:None x4:30 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:10 x3:None x4:30 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:10 x3:None x4:30 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:10 x3:None x4:30 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: begin(T3)
+command: begin(T4)
+command: begin(T5)
+command: R(T3,x3)
+x3:30
+command: fail(4)
+command: recover(4)
+command: R(T4,x4)
+x4:40
+command: R(T5,x5)
+x5:50
+command: R(T1,x6)
+x6:60
+command: R(T2,x2)
+x2:20
+command: W(T1,x2,10)
+Transaction T1 waits for all up sites for lock conflict
+command: W(T2,x3,20)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 write succeed. Affected sites:4
+command: W(T3,x4,30)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T3 waits for all up sites for lock conflict
+command: W(T5,x1,50)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T3 waits for all up sites for lock conflict
+Transaction T5 write succeed. Affected sites:2
+command: end(T5)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T3 waits for all up sites for lock conflict
+Transaction T5 commits
+command: W(T4,x5,40)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T3 waits for all up sites for lock conflict
+Transaction T4 write succeed. Affected sites:6
+command: end(T4)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T3 waits for all up sites for lock conflict
+Transaction T4 commits
+command: end(T3)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T3 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+T3 aborts
+command: end(T2)
+Transaction T1 waits for all up sites for lock conflict
+Transaction T2 commits
+command: end(T1)
+Transaction T1 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:50 x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:10 x3:20 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:10 x3:None x4:40 x5:40 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:10 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: W(T1, x3, 100)
+Transaction T1 write succeed. Affected sites:4
+command: end(T1)
+Transaction T1 commits
+command: fail(1)
+command: fail(2)
+command: fail(3)
+command: fail(4)
+command: fail(5)
+command: fail(6)
+command: fail(7)
+command: fail(8)
+command: fail(9)
+command: fail(10)
+command: recover(4)
+command: beginRO(T2)
+command: R(T2, x3)
+x3:100
+command: R(T2, x2)
+T2 aborts
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:100 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: W(T1, x2, 302)
+Transaction T1 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: R(T1, x2)
+x2:302
+command: end(T1)
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:302 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:302 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:302 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: begin(T2)
+command: W(T1,x2,9)
+Transaction T1 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: fail(1)
+command: end(T1)
+T1 aborts
+command: begin(T3)
+command: W(T3,x2,100)
+Transaction T3 write succeed. Affected sites:2 3 4 5 6 7 8 9 10 
+command: end(T3)
+Transaction T3 commits
+command: recover(1)
+command: fail(2)
+command: fail(3)
+command: fail(4)
+command: fail(5)
+command: fail(6)
+command: fail(7)
+command: fail(8)
+command: fail(9)
+command: fail(10)
+command: R(T2,x2)
+command: begin(T5)
+command: W(T5,x2,90)
+Transaction T5 waits for all up sites for lock conflict
+command: end(T5)
+Transaction T5 waits for all up sites for lock conflict
+command: dump()
+Transaction T5 waits for all up sites for lock conflict
+site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:100 x3:30 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:100 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:100 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T1)
+command: beginRO(T2)
+command: R(T2,x1)
+x1:10
+command: R(T2,x2)
+x2:20
+command: W(T1,x3,33)
+Transaction T1 write succeed. Affected sites:4
+command: end(T1)
+Transaction T1 commits
+command: beginRO(T3)
+command: R(T3,x3)
+x3:33
+command: R(T2,x3)
+x3:30
+command: end(T2)
+Transaction T2 commits
+command: end(T3)
+Transaction T3 commits
+command: dump()
+site 1 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:20 x3:33 x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:20 x3:None x4:40 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:20 x3:None x4:40 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+command: begin(T3)
+command: begin(T1)
+command: begin(T2)
+command: W(T3,x2,22)
+Transaction T3 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: W(T2,x4,44)
+Transaction T2 write succeed. Affected sites:1 2 3 4 5 6 7 8 9 10 
+command: R(T3,x4)
+Transaction T3 waits for conflict lock
+command: end(T2)
+Transaction T3 waits for conflict lock
+Transaction T2 commits
+command: end(T3)
+x4:44
+Transaction T3 commits
+command: R(T1,x2)
+x2:22
+command: end(T1)
+Transaction T1 commits
+command: dump()
+site 1 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 2 - x1:10 x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:110 x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 3 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 4 - x1:None x2:22 x3:30 x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:130 x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 5 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 6 - x1:None x2:22 x3:None x4:44 x5:50 x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:150 x16:160 x17:None x18:180 x19:None x20:200 
+
+site 7 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 8 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:70 x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:170 x18:180 x19:None x20:200 
+
+site 9 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:None x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:None x20:200 
+
+site 10 - x1:None x2:22 x3:None x4:44 x5:None x6:60 x7:None x8:80 x9:90 x10:100 x11:None x12:120 x13:None x14:140 x15:None x16:160 x17:None x18:180 x19:190 x20:200 
+
+#################./test_files/test7.txt
+#################./test_files/test6.txt
+#################./test_files/test4.txt
+#################./test_files/test5.txt
+#################./test_files/test1.txt
+#################./test_files/test2.txt
+#################./test_files/test3.txt
+#################./test_files/test28.txt
+#################./test_files/test14.txt
+#################./test_files/test15.txt
+#################./test_files/test29.txt
+#################./test_files/test17.txt
+#################./test_files/test16.txt
+#################./test_files/test12.txt
+#################./test_files/test3_7.txt
+#################./test_files/test13.txt
+#################./test_files/test11.txt
+#################./test_files/test3_5.txt
+#################./test_files/test10.txt
+#################./test_files/test21.txt
+#################./test_files/test20.txt
+#################./test_files/test34.txt
+#################./test_files/test22.txt
+#################./test_files/test23.txt
+#################./test_files/test27.txt
+#################./test_files/test33.txt
+#################./test_files/test32.txt
+#################./test_files/test26.txt
+#################./test_files/test30.txt
+#################./test_files/test24.txt
+#################./test_files/test18.txt
+#################./test_files/test19.txt
+#################./test_files/test25.txt
+#################./test_files/test31.txt
+#################./test_files/test.txt
+#################./test_files/test8.txt
+#################./test_files/test9.txt
