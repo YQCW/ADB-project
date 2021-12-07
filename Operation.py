@@ -67,12 +67,12 @@ class BeginRO(Operation):
         self.transaction = para[0]
 
     def execute(self, time, tm, retry=False):
-        t = Transaction(self.para[0], time, True)
+        t = Transaction(self.transaction, time, True)
 
         if t.id not in tm.transactions:
-            tm.transactions[t.id] = t
             for site in tm.sites:
                 site.snapshot(time)
+            tm.transactions[t.id] = t
 
         return True
 
@@ -115,12 +115,11 @@ class End(Operation):
         if not retry:
             self.append(tm)
 
-        if tm.transactions[self.para[0]].willAbort:
-            tm.abortTransaction(self.para[0])
+        if tm.transactions[self.transaction].willAbort:
+            tm.abortTransaction(self.transaction)
             return True
 
-        tid = self.para[0]
-        start_time = tm.transactions[tid].beginTime
+        tid = self.transaction
 
         if tid in tm.blockedTransactions:
             return False
@@ -128,15 +127,16 @@ class End(Operation):
         print("Transaction "+tid+" commits")
 
         for site in tm.sites:
-            if site.up and tid in site.log:
-                l = site.log[tid]
-                for item_id, item in l.items():
-                    site.data[item_id-1] = item
-                    site.accessible[item_id - 1] = True
-                site.log.pop(tid)
+            if site.up:
+                if tid in site.log:
+                    for item_id, item in site.log[tid].items():
+                        site.data[item_id-1] = item
+                        site.accessible[item_id-1] = True
+                    del site.log[tid]
 
-            elif site.up and start_time in site.snapshots:
-                site.snapshots.pop(start_time)
+            elif site.up:
+                if tm.transactions[tid].beginTime in site.snapshots:
+                    del site.snapshots[tm.transactions[tid].beginTime]
 
             site.lockTable.releaseTransactionLock(tid)
 

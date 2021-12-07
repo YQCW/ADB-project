@@ -4,137 +4,93 @@ class WaitForGraph(object):
         #the transaction manager
         self.tm = tm
 
+        #transactions involved in a circle
+        self.trace = []
+
         #key is the item, value is a list of transactions that access the item
         self.itemToOps = {}
 
         #key is the start point, value is the end point
         self.wait_for = {}
 
-        #transactions involved in a circle
-        self.trace = []
+
+    def addOp(self, ops, op, id):
+        ops.add(op)
+        self.itemToOps[id] = ops
+
+    def addWait(self, op, id):
+        waits = self.wait_for.get(id, set())
+        waits.add(op.para[0])
+        self.wait_for[id] = waits
 
     def addOperation(self, operation):
-        """
-        Add operation to self.itemToOps dictionary, for example, if the operation want to access x1,
-        we add the operation in this way self.itemToOps["x1"].add(operation)
 
-        Add new node in wait-for graph if the transactions does not exist
-
-        ReadOnly operation will be ignored
-
-        :param operation: Operation object
-        :return: None
-        """
         type = operation.type
-        para = operation.para
 
-        # Only add read and write operations
-        if not (type == "R" or type == "W"):
-            return
+        if type == "R" or type == "W":
+            para = operation.para
+            transactionId, itemId = para[0], para[1]
 
-        transactionId, itemId = para[0], para[1]
+            if not self.tm.transactions[transactionId].readOnly:
+                ops = self.itemToOps.get(itemId, set())
 
-        # ignore the operation belongs to a readonly transaction
-        if self.tm.transactions[transactionId].readOnly:
-            return
+                if type == "W":
+                    for op in ops:
+                        if op.type == "W" and op.para[0] == transactionId:
+                            addOp(ops, operation, itemId)
+                            return
 
-        # Get all operations on the variable
-        ops = self.itemToOps.get(itemId, set())
+                    for op in ops:
+                        if op.para[0] != transactionId:
+                            addWait(op, transactionId)
+                else:
+                    for op in ops:
+                        if op.para[0] == transactionId:
+                            addOp(ops, operation, itemId)
+                            return
 
-        # Case 1: operation is R
-        if type == "R":
-            # Check if previous operation of the same transaction operated on the same variable
-            # if so, no deadlock will be formed by adding this operation
-            for op in ops:
-                if op.para[0] == transactionId:
-                    # Add operation to the dictionary
-                    ops.add(operation)
-                    self.itemToOps[itemId] = ops
-                    return
+                    for op in ops:
+                        if op.type == "W" and op.para[0] != transactionId:
+                            addWait(op, transactionId)
 
-            # for any operation which is on the same variable,
-            # if op is W and transaction id is different, then there should be a edge
-            # For example, op is W(T1, x1, 10), the operation to be added is R(T2, x1)
-            # then the edge is T2 -> T1
-            for op in ops:
-                if op.type == "W" and op.para[0] != transactionId:
-                    waits = self.wait_for.get(transactionId, set())
-                    waits.add(op.para[0])
-                    self.wait_for[transactionId] = waits
-        # Case 2: operation is W
-        else:
-            # Check if previous operation of the same transaction operated on the same variable
-            # if so, no deadlock will be formed by adding this operation
-            for op in ops:
-                if op.para[0] == transactionId and op.type == "W":
-                    # Add operation to the dictionary
-                    ops.add(operation)
-                    self.itemToOps[itemId] = ops
-                    return
+                addOp(ops, operation, itemId)
 
-            # W operation will conflict with all other operation on the same variable
-            for op in ops:
-                if op.para[0] != transactionId:
-                    waits = self.wait_for.get(transactionId, set())
-                    waits.add(op.para[0])
-                    self.wait_for[transactionId] = waits
-
-        # Add operation to the dictionary
-        ops.add(operation)
-        self.itemToOps[itemId] = ops
-
-    def _recursive_check(self, cur_node, target, visited, trace):
+    def DFS(self, cur_node, target, visited):
         visited[cur_node] = True
 
-        if cur_node not in self.wait_for:
-            return False
+        if cur_node in self.wait_for:
+            self.trace.append(cur_node)
+            neighbor_nodes = self.wait_for[cur_node]
 
-        trace.append(cur_node)
-        neighbor_nodes = self.wait_for[cur_node]
-
-        for neighbor in neighbor_nodes:
-            if neighbor == target:
-                return True
-            elif neighbor not in visited:
-                continue
-            elif not visited[neighbor]:
-                if self._recursive_check(neighbor, target, visited, trace):
+            for neighbor in neighbor_nodes:
+                if neighbor == target:
                     return True
-
-        trace.pop(-1)
+                else:
+                    if neighbor not in visited:
+                        continue
+                    if not visited[neighbor]:
+                        if self.DFS(neighbor, target, visited):
+                            return True
+            self.trace.pop(-1)
         return False
 
     def checkDeadlock(self):
-        """
-        Detect if there is a circle in current execution
-
-        :return: True if there is a deadlock, otherwise False
-        """
-        nodes = list(self.wait_for.keys())
         self.trace = []
-
-        for target in nodes:
-            visited = {node: False for node in nodes}
-            if self._recursive_check(target, target, visited, self.trace):
+        nodes = list(self.wait_for.keys())
+        for target in self.wait_for.keys():
+            visited = {node: False for node in self.wait_for.keys()}
+            if self.DFS(target, target, visited):
                 return True
         return False
 
     def removeTransaction(self, transaction_id):
-        """
-        Remove wait-for node has the transaction_id, remove all operations belong to the transaction
-
-        Typically, this function will be called when a transaction has been aborted or has committed
-
-        :param transaction_id: identifier of the transaction
-        :return: None
-        """
-        # Modify var_to_trans
-        for var, ops in self.itemToOps.items():
-            ops = {op for op in ops if op.para[0] != transaction_id}
-            self.itemToOps[var] = ops
-
-        # Modify wait for graph, delete the node of given transaction id
-        self.wait_for.pop(transaction_id, None)
+        for item, ops in self.itemToOps.items():
+            tmp = {}
+            for op in ops:
+                if op.para[0] != transaction_id:
+                    tmp.add(op)
+            self.itemToOps[item] = tmp
+        del self.wait_for[transaction_id]
 
     def getInvolvedTransactions(self):
         return self.trace
