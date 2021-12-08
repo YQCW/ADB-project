@@ -2,6 +2,11 @@ import re
 from Transaction import Transaction
 
 def parseOp(line):
+    """
+    Parse operation in one line
+    input: one command in a  line, including the comment
+    output: the operation type and parameters
+    """
     regex = r'(.*)\((.*?)\)'
     lst = line.strip()
     if lst.startswith('//') or lst == "":
@@ -17,6 +22,11 @@ def parseOp(line):
         return op, para
 
 def readNotFromCopy(transactionId, itemId, site):
+    """
+    Read item from site without copy
+    input: transaction id, item id, site object
+    output: return true if read successfully
+    """
     #if the item is modified by the transaction, just read from the log
     if transactionId in site.log and itemId in site.log[transactionId]:
         result = site.log[transactionId][itemId]
@@ -29,6 +39,11 @@ def readNotFromCopy(transactionId, itemId, site):
     return True
 
 def getNumber(itemId):
+    """
+    get the item id from the string like "x12"
+    input: item id with character 'x'
+    output item id without character 'x'
+    """
     return int(itemId[1:])
 
 class Operation(object):
@@ -41,6 +56,11 @@ class Operation(object):
         pass
 
     def append(self, tm):
+        """
+        add the operation to the transaction list and wait for graph of the transaction manager
+        input: transaction manager object
+        output: None
+        """
         tid = self.para[0]
 
         tm.transactions[tid].addOperation(self)
@@ -54,6 +74,11 @@ class Begin(Operation):
         self.transaction = para[0]
 
     def execute(self, time, tm, retry=False):
+        """
+        execute the operation
+        input: time stamp, transaction manager object, whether the execution is retry
+        output: True if success, False if fail
+        """
         t = Transaction(self.para[0], time, False)
         if t.id not in tm.transactions:
             tm.transactions[t.id] = t
@@ -67,6 +92,11 @@ class BeginRO(Operation):
         self.transaction = para[0]
 
     def execute(self, time, tm, retry=False):
+        """
+        execute the operation
+        input: time stamp, transaction manager object, whether the execution is retry
+        output: True if success, False if fail
+        """
         t = Transaction(self.transaction, time, True)
 
         if t.id not in tm.transactions:
@@ -83,6 +113,11 @@ class Fail(Operation):
         self.type = 'fail'
 
     def execute(self, time, tm, retry=False):
+        """
+        execute the operation
+        input: time stamp, transaction manager object, whether the execution is retry
+        output: True if success, False if fail
+        """
         site_id = int(self.para[0])
         site = tm.sites[site_id-1]
         transactions = site.lockTable.getInvolvedTransactions()
@@ -102,6 +137,11 @@ class Recover(Operation):
         self.type = 'recover'
 
     def execute(self, time, tm, retry=False):
+        """
+        execute the operation
+        input: time stamp, transaction manager object, whether the execution is retry
+        output: True if success, False if fail
+        """
         site_id = int(self.para[0])
         tm.sites[site_id-1].up = True
         return True
@@ -114,6 +154,11 @@ class End(Operation):
         self.transaction = para[0]
 
     def execute(self, time, tm, retry=False):
+        """
+        execute the operation
+        input: time stamp, transaction manager object, whether the execution is retry
+        output: True if success, False if fail
+        """
         if not retry:
             self.append(tm)
 
@@ -156,6 +201,11 @@ class R(Operation):
         self.transaction = para[0]
 
     def execute(self, time, tm, retry=False):
+        """
+        execute the operation
+        input: time stamp, transaction manager object, whether the execution is retry
+        output: True if success, False if fail
+        """
         if retry == False:
             self.append(tm)
         transactionId = self.para[0]
@@ -230,6 +280,11 @@ class W(Operation):
         self.type = 'W'
 
     def execute(self, time, tm, retry=False):
+        """
+        execute the operation
+        input: time stamp, transaction manager object, whether the execution is retry
+        output: True if success, False if fail
+        """
         if retry == False:
             self.append(tm)
         transactionId = self.para[0]
@@ -294,6 +349,11 @@ class Dump(Operation):
         self.transaction = para[0]
 
     def execute(self, time, tm, retry=False):
+        """
+        execute the operation
+        input: time stamp, transaction manager object, whether the execution is retry
+        output: True if success, False if fail
+        """
         for site in tm.sites:
             print("site "+str(site.siteId)+" - ",end="")
             data = site.data
