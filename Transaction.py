@@ -15,7 +15,17 @@ class Transaction(object):
         self.readOnly = readOnly
 
     def abort(self):
+        """
+        change the willAbort tag to true:
+        input: None
+        output: None
+        """
         self.willAbort = True
 
     def addOperation(self, operation):
+        """
+        add an operation to the transaction
+        input: operation object
+        output: None
+        """
         self.operations.append(operation)
