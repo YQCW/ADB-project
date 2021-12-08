@@ -15,16 +15,30 @@ class WaitForGraph(object):
 
 
     def addOp(self, ops, op, id):
+        """
+        Add an operation to a operation set, which includes an item's corresponding all operations, and itemToOps dic
+        input: operation set, Operation, ItemId
+        output: None
+        """
         ops.add(op)
         self.itemToOps[id] = ops
 
     def addWait(self, op, id):
+        """
+        Add an operation to a operation set, which includes an transaction's corresponding all operations, and waits_for graph
+        input: operation, transactionId
+        output: None
+        """
         waits = self.wait_for.get(id, set())
         waits.add(op.para[0])
         self.wait_for[id] = waits
 
     def addOperation(self, operation):
-
+        """
+        Add operation to item-op dict or wait-for graph while executing
+        input: operation
+        output: None
+        """
         type = operation.type
 
         if type == "R" or type == "W":
@@ -56,6 +70,11 @@ class WaitForGraph(object):
                 self.addOp(ops, operation, itemId)
 
     def DFS(self, cur_node, target, visited):
+        """
+        Algorithm to detect circle in a graph
+        input: current node, target node, visited node list
+        output: True if find, False if not find
+        """
         visited[cur_node] = True
 
         if cur_node in self.wait_for:
@@ -75,6 +94,11 @@ class WaitForGraph(object):
         return False
 
     def checkDeadlock(self):
+        """
+        Use DFS to check if there is a deadlock, i.e., circle
+        input: None
+        output: True if deadlock, False if no deadlock
+        """
         self.trace = []
         nodes = list(self.wait_for.keys())
         for target in self.wait_for.keys():
@@ -84,6 +108,11 @@ class WaitForGraph(object):
         return False
 
     def removeTransaction(self, transaction_id):
+        """
+        Remove correspoding operations and wait-for transactions with the transaction_id
+        input: transactionId
+        output: None
+        """
         for item, ops in self.itemToOps.items():
             tmp = set()
             for op in ops:
@@ -94,4 +123,9 @@ class WaitForGraph(object):
             del self.wait_for[transaction_id]
 
     def getInvolvedTransactions(self):
+        """
+        Find all transactions in a deadlock
+        input: None
+        output: transactions in the deadlock
+        """
         return self.trace
