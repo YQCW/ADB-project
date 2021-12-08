@@ -7,6 +7,11 @@ class LockTable(object):
         self.lockTable = {}
 
     def addLock(self, itemId, transactionId, lockType):
+        """
+        add read or write lock to a specific item for a specific transaction
+        input: item id, transaction id, the type of the lock (0 for read, 1 for write)
+        output: True if the lock can be acquired, False if not
+        """
         #several conditions to consider:
         #no lock on certain item
         #print("call addLock:",itemId,transactionId,lockType)
@@ -43,6 +48,11 @@ class LockTable(object):
                     return False
 
     def releaseLock(self,itemId, transactionId):
+        """
+        release the lock on specific item for specific transaction
+        input: item id, transaction id
+        output: True if release successfully, False if not
+        """
         #if the lock is exclusive lock
         if self.lockTable[itemId][0] == 1:
             if len(self.lockTable[itemId][1]) == 1 and transactionId in self.lockTable[itemId][1]:
@@ -56,10 +66,20 @@ class LockTable(object):
         return False
 
     def clearLockTable(self):
+        """
+        clear the lock table, used when a site fails
+        input: None
+        output: None
+        """
         #call this function when a site fail and clear the lock table
         self.lockTable = {}
 
     def releaseTransactionLock(self,transactionId):
+        """
+        release all the lock hold by a specific transaction
+        input: transaction id
+        output: None
+        """
         #search through the lock table and release the lock hold by certain transaction
         #print("call release transaction lock: ",transactionId)
         toBeDeleted = []
@@ -75,6 +95,11 @@ class LockTable(object):
         #print(self.lockTable)
 
     def getInvolvedTransactions(self):
+        """
+        get the transactions that are involved in the cycle of a deadlock
+        input: None:
+        output: a list of the transaction id
+        """
         transactions = set()
         for itemId, locks in self.lockTable.items():
             # Transaction has read lock on var_id
