@@ -9,6 +9,11 @@ class TransactionManager(object):
         self.blockedOperations = []
 
     def step(self, operation, timeStamp):
+        """
+        retry the blocked operations, execute new command and then check the deadlock
+        input: operation object, time stamp
+        output: None
+        """
         #retry the blocked transactions/operations and update the blocked transactions/operations
         newBlockedOperations = []
         newBlockedTransactions = []
@@ -35,6 +40,11 @@ class TransactionManager(object):
             self.abortTransaction(t)
 
     def getYoungest(self,transactions):
+        """
+        get the youngest transaction within a list of transactions
+        input: a list of transaction id
+        output: the id of the youngest transaction
+        """
         maxTime = self.transactions[transactions[0]].beginTime
         youngest = transactions[0]
         for transaction in transactions:
@@ -44,6 +54,11 @@ class TransactionManager(object):
         return youngest
 
     def abortTransaction(self,transactionId):
+        """
+        abort the transaction, print event info
+        input: transaction id
+        output: None
+        """
         for site in self.sites:
             if site.up == True:
                 # release locks hold by transaction in every up site
