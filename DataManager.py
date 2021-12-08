@@ -20,6 +20,11 @@ class site(object):
         self.log = {}
 
     def fail(self):
+        """
+        the site fails, clear log and lock table
+        input: None
+        output: None
+        """
         self.up = False
         self.log = {}
         self.lockTable.clearLockTable()
@@ -30,6 +35,11 @@ class site(object):
                 self.accessible[i - 1] = False
 
     def commit(self, transactionId):
+        """
+        the transaction commits, change data from log, change accessibility of the data
+        input: transaction id
+        output: True if success, False if fail
+        """
         if transactionId in self.log.keys():
             log = self.log[transactionId]
             for key, value in log:
@@ -42,13 +52,28 @@ class site(object):
             return False
 
     def abortTransaction(self,transactionId):
+        """
+        abort the transaction, remove changes from log
+        input: transaction id
+        output: None
+        """
         if transactionId in self.log.keys():
             del self.log[transactionId]
 
     def recover(self):
+        """
+        recover the site, change up tag to True
+        input: None
+        output: None
+        """
         self.up = True
 
     def snapshot(self, timeStamp):
+        """
+        create a snapshot from the current data, add it to snapshots list
+        input: time stamp
+        output: None
+        """
         tmp = [None] * 20
         for i in range(1,21):
             if self.accessible[i-1] == True:
@@ -56,4 +81,9 @@ class site(object):
         self.snapshots[timeStamp] = tmp.copy()
 
     def getItemFromSnapshot(self, timeStamp, index):
+        """
+        get an item from snapshot
+        input: time stamp, item id
+        output: the value of the item
+        """
         return self.snapshots[timeStamp][index-1]
